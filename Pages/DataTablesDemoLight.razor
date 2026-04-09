@@ -1,0 +1,127 @@
+@page "/datatables-light"
+@inject IJSRuntime JS
+
+<PageTitle>DataTables Light Theme Demo</PageTitle>
+
+<div class="container-fluid py-4">
+    <h1 class="mb-1">DataTables – Light Header Theme</h1>
+    <p class="text-muted mb-4">
+        Sort icons use <strong>black</strong> for unsorted columns,
+        <span style="color:#0d6efd;font-weight:600;">blue</span> for ascending, and
+        <span style="color:#dc3545;font-weight:600;">red</span> for descending — optimised for light header backgrounds.
+    </p>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-light border-bottom">
+            <h5 class="mb-0 text-dark">Product Catalog</h5>
+        </div>
+        <div class="card-body dt-light-header">
+            <table id="productTable" class="table table-striped table-hover table-bordered align-middle" style="width:100%">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Brand</th>
+                        <th scope="col">SKU</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Unit Price</th>
+                        <th scope="col">Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Products)
+                    {
+                        <tr>
+                            <td>@p.Name</td>
+                            <td>@p.Category</td>
+                            <td>@p.Brand</td>
+                            <td>@p.SKU</td>
+                            <td>@p.Stock</td>
+                            <td>@p.UnitPrice.ToString("C2")</td>
+                            <td>@p.Rating.ToString("F1")</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Brand</th>
+                        <th scope="col">SKU</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Unit Price</th>
+                        <th scope="col">Rating</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private record Product(string Name, string Category, string Brand, string SKU, int Stock, decimal UnitPrice, double Rating);
+
+    private List<Product> Products = new()
+    {
+        new("Wireless Keyboard",       "Peripherals",   "Logitech",  "LOG-KB-001",  245, 49.99m,  4.5),
+        new("Mechanical Keyboard",     "Peripherals",   "Keychron",  "KEY-KB-101",   87, 129.00m, 4.8),
+        new("USB-C Hub 7-Port",        "Peripherals",   "Anker",     "ANK-HB-301",  312, 39.99m,  4.4),
+        new("27\" 4K Monitor",         "Displays",      "Dell",      "DEL-MN-271",   54, 499.00m, 4.7),
+        new("34\" Ultrawide Monitor",  "Displays",      "LG",        "LG-MN-341",    29, 699.00m, 4.6),
+        new("Webcam 1080p",            "Peripherals",   "Logitech",  "LOG-WC-002",  178, 79.99m,  4.3),
+        new("Webcam 4K",               "Peripherals",   "Razer",     "RAZ-WC-401",   63, 199.99m, 4.6),
+        new("Noise-Cancel Headset",    "Audio",         "Sony",      "SON-HS-501",  134, 349.00m, 4.9),
+        new("Gaming Headset",          "Audio",         "SteelSeries","SS-HS-601",   92, 119.99m, 4.4),
+        new("Wireless Mouse",          "Peripherals",   "Logitech",  "LOG-MS-003",  401, 29.99m,  4.2),
+        new("Vertical Mouse",          "Peripherals",   "Anker",     "ANK-MS-302",  156, 35.99m,  4.1),
+        new("Laptop Stand",            "Accessories",   "Nexstand",  "NEX-ST-201",  227, 44.99m,  4.5),
+        new("Monitor Arm Single",      "Accessories",   "Ergotron",  "ERG-AR-101",   74, 169.00m, 4.8),
+        new("Monitor Arm Dual",        "Accessories",   "Ergotron",  "ERG-AR-102",   41, 299.00m, 4.7),
+        new("USB-C Dock",              "Peripherals",   "CalDigit",  "CAL-DK-501",   38, 249.99m, 4.9),
+        new("Portable SSD 1TB",        "Storage",       "Samsung",   "SAM-SSD-101", 189, 109.99m, 4.8),
+        new("Portable SSD 2TB",        "Storage",       "Samsung",   "SAM-SSD-102",  97, 189.99m, 4.7),
+        new("NVMe SSD 1TB",            "Storage",       "WD",        "WD-SSD-201",  302, 89.99m,  4.6),
+        new("External HDD 4TB",        "Storage",       "Seagate",   "SEA-HDD-401", 124, 79.99m,  4.2),
+        new("Wireless Charger Pad",    "Power",         "Belkin",    "BEL-CH-201",  358, 29.99m,  4.0),
+        new("USB-C Charger 65W",       "Power",         "Anker",     "ANK-CH-303",  445, 35.99m,  4.5),
+        new("Power Bank 20000mAh",     "Power",         "Anker",     "ANK-PB-304",  267, 49.99m,  4.6),
+        new("Smart Plug 4-Pack",       "Smart Home",    "Kasa",      "KAS-SP-401",  198, 29.99m,  4.4),
+        new("LED Strip 10m",           "Smart Home",    "Govee",     "GOV-LS-101",  312, 39.99m,  4.3),
+        new("Desk Mat XL",             "Accessories",   "Grovemade", "GRV-DM-001",  143, 69.00m,  4.7),
+        new("Cable Management Box",    "Accessories",   "D-Line",    "DLN-CM-101",  289, 24.99m,  4.2),
+        new("Adjustable Desk",         "Furniture",     "FlexiSpot", "FLX-DK-201",   18, 549.00m, 4.6),
+        new("Ergonomic Chair",         "Furniture",     "Herman Miller","HM-CH-101",  9, 1495.00m,4.9),
+        new("Monitor Light Bar",       "Lighting",      "BenQ",      "BNQ-LT-101",  201, 109.99m, 4.8),
+        new("Ring Light 18\"",         "Lighting",      "Elgato",    "ELG-RL-181",   77, 149.99m, 4.5),
+        new("Stream Deck MK.2",        "Controls",      "Elgato",    "ELG-SD-002",   55, 149.99m, 4.8),
+        new("Drawing Tablet M",        "Input",         "Wacom",     "WAC-DT-201",   43, 229.00m, 4.6),
+        new("USB Microphone",          "Audio",         "Blue",      "BLU-MIC-101",  99, 129.99m, 4.5),
+        new("Audio Interface",         "Audio",         "Focusrite", "FOC-AI-201",   61, 169.99m, 4.8),
+        new("Smartphone Stand",        "Accessories",   "Lamicall",  "LAM-SS-101",  512, 15.99m,  4.1),
+        new("Laptop Bag 15\"",         "Bags",          "Tomtoc",    "TOM-LB-151",  176, 59.99m,  4.5),
+        new("Backpack 30L",            "Bags",          "Peak Design","PD-BP-301",   34, 299.95m, 4.8),
+        new("Cable Organiser Kit",     "Accessories",   "Velcro",    "VEL-CO-101",  634, 12.99m,  4.3),
+        new("Screen Cleaning Kit",     "Accessories",   "MagicFiber","MF-CK-101",   720, 9.99m,   4.2),
+        new("Thermal Paste 5g",        "Components",    "Arctic",    "ARC-TP-501",  893, 7.99m,   4.7),
+    };
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("initDataTable", "productTable", new
+            {
+                pageLength = 10,
+                lengthMenu = new[] { 5, 10, 25, 50 },
+                order = new[] { new[] { "0", "asc" } },
+                language = new
+                {
+                    search = "Filter products:",
+                    lengthMenu = "Show _MENU_ entries",
+                    info = "Showing _START_ to _END_ of _TOTAL_ products",
+                    paginate = new { first = "First", last = "Last", next = "Next", previous = "Previous" }
+                }
+            });
+        }
+    }
+}

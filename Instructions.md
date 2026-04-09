@@ -1,0 +1,5 @@
+-- Create a blazor server application
+-- Add datatables library
+-- Add blazor page component to demonstrate datatables
+-- Style the datatable using the latest bootstrap
+-- Style the column sort icons that mean ADA contrast standards. 

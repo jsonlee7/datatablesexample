@@ -1,0 +1,136 @@
+@page "/datatables"
+@inject IJSRuntime JS
+
+<PageTitle>DataTables Demo</PageTitle>
+
+<div class="container-fluid py-4">
+    <h1 class="mb-1">DataTables Demo</h1>
+    <p class="text-muted mb-4">
+        Demonstrating <strong>DataTables 2.x</strong> integrated with <strong>Bootstrap 5.3</strong>
+        in a Blazor WebAssembly application. Columns are sortable, searchable, and paginated.
+    </p>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Employee Directory</h5>
+        </div>
+        <div class="card-body dt-dark-header">
+            <table id="employeeTable" class="table table-striped table-hover table-bordered align-middle" style="width:100%">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Position</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Office</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">Salary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var emp in Employees)
+                    {
+                        <tr>
+                            <td>@emp.Name</td>
+                            <td>@emp.Position</td>
+                            <td>@emp.Department</td>
+                            <td>@emp.Office</td>
+                            <td>@emp.Age</td>
+                            <td>@emp.StartDate.ToString("yyyy-MM-dd")</td>
+                            <td>@emp.Salary.ToString("C0")</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Position</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Office</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">Salary</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private record Employee(string Name, string Position, string Department, string Office, int Age, DateOnly StartDate, decimal Salary);
+
+    private List<Employee> Employees = new()
+    {
+        new("Airi Satou",        "Accountant",                 "Finance",       "Tokyo",       33, new DateOnly(2008, 11, 28), 162700),
+        new("Angelica Ramos",    "Chief Executive Officer",    "Executive",     "London",      47, new DateOnly(2009,  10, 9), 1200000),
+        new("Ashton Cox",        "Junior Technical Author",    "Engineering",   "San Francisco", 66, new DateOnly(2009, 1, 12), 86000),
+        new("Bradley Greer",     "Software Engineer",          "Engineering",   "London",      41, new DateOnly(2012, 10, 13), 132000),
+        new("Brenden Wagner",    "Software Engineer",          "Engineering",   "San Francisco", 28, new DateOnly(2011,  6, 7), 206850),
+        new("Brielle Williamson","Integration Specialist",     "IT",            "New York",    61, new DateOnly(2012,  12, 2), 372000),
+        new("Bruno Nash",        "Software Engineer",          "Engineering",   "London",      38, new DateOnly(2011,  5, 3), 163500),
+        new("Caesar Vance",      "Pre-Sales Support",          "Sales",         "New York",    21, new DateOnly(2011, 12, 12), 106450),
+        new("Cara Stevens",      "Sales Assistant",            "Sales",         "New York",    46, new DateOnly(2011, 12,  6), 145600),
+        new("Cedric Kelly",      "Senior Javascript Developer","Engineering",   "Edinburgh",   22, new DateOnly(2012,  3, 29), 433060),
+        new("Charde Marshall",   "Regional Director",          "Operations",    "San Francisco", 36, new DateOnly(2008, 10, 16), 470600),
+        new("Colleen Hurst",     "Javascript Developer",       "Engineering",   "San Francisco", 39, new DateOnly(2009,  9, 15), 205500),
+        new("Dai Rios",          "Personnel Lead",             "HR",            "Edinburgh",   35, new DateOnly(2012,  9, 26), 217500),
+        new("Donna Snider",      "Customer Support",           "Support",       "New York",    27, new DateOnly(2011,  1, 25), 112000),
+        new("Doris Wilder",      "Sales Assistant",            "Sales",         "Sydney",      23, new DateOnly(2010,  9, 20), 85600),
+        new("Finn Camacho",      "Support Engineer",           "Support",       "San Francisco", 47, new DateOnly(2009,  7,  7), 87500),
+        new("Fiona Green",       "Chief Operating Officer",    "Executive",     "San Francisco", 48, new DateOnly(2010, 3, 11), 850000),
+        new("Gavin Cortez",      "Team Leader",                "Operations",    "San Francisco", 22, new DateOnly(2008, 10, 26), 235500),
+        new("Gavin Joyce",       "Developer",                  "Engineering",   "Edinburgh",   42, new DateOnly(2010, 12, 22), 92575),
+        new("Gloria Little",     "Systems Administrator",      "IT",            "New York",    59, new DateOnly(2009,  4,  10), 237500),
+        new("Haley Kennedy",     "Senior Marketing Designer",  "Marketing",     "London",      43, new DateOnly(2012,  12,  18), 313500),
+        new("Howard Hatfield",   "Office Manager",             "Operations",    "San Francisco", 51, new DateOnly(2008,  6, 19), 164500),
+        new("Jackson Bradshaw",  "Director",                   "Executive",     "New York",    65, new DateOnly(2008, 9, 26), 645750),
+        new("Jena Gaines",       "Office Manager",             "Operations",    "London",      30, new DateOnly(2008, 12, 19), 90560),
+        new("Jenette Caldwell",  "Development Lead",           "Engineering",   "New York",    30, new DateOnly(2011,  9, 3), 345000),
+        new("Jennifer Acosta",   "Junior Javascript Developer","Engineering",   "Edinburgh",   43, new DateOnly(2013,  2,  1), 75650),
+        new("Jennifer Chang",    "Regional Director",          "Operations",    "Singapore",   28, new DateOnly(2010, 11, 14), 357650),
+        new("Jhon Karahalios",   "Sales Assistant",            "Sales",         "Melbourne",   36, new DateOnly(2012, 3,  7), 95400),
+        new("Jonas Alexander",   "Developer",                  "Engineering",   "San Francisco", 30, new DateOnly(2010,  7, 14), 86500),
+        new("Lael Greer",        "Systems Administrator",      "IT",            "London",      21, new DateOnly(2009,  2,  27), 103500),
+        new("Martena Mccray",    "Post-Sales Support",         "Support",       "Edinburgh",   46, new DateOnly(2011,  3, 9), 324050),
+        new("Michael Bruce",     "Javascript Developer",       "Engineering",   "Singapore",   29, new DateOnly(2011,  6,  27), 183000),
+        new("Michael Silva",     "Marketing Designer",         "Marketing",     "London",      66, new DateOnly(2012,  11, 27), 198500),
+        new("Michelle House",    "Integration Specialist",     "IT",            "Sydney",      37, new DateOnly(2011,  6,  2), 95400),
+        new("Olivia Liang",      "Support Engineer",           "Support",       "Singapore",   64, new DateOnly(2011,  2, 14), 234500),
+        new("Paul Byrd",         "Chief Financial Officer",    "Finance",       "New York",    64, new DateOnly(2010,  6,  9), 725000),
+        new("Prescott Bartlett", "Technical Author",           "Engineering",   "London",      27, new DateOnly(2011,  5,  7), 145000),
+        new("Quinn Flynn",       "Support Lead",               "Support",       "Edinburgh",   22, new DateOnly(2013,  3,  3), 342000),
+        new("Rhona Davidson",    "Integration Specialist",     "IT",            "Tokyo",       55, new DateOnly(2010,  10, 14), 327900),
+        new("Shou Itou",         "Regional Marketing",         "Marketing",     "Tokyo",       20, new DateOnly(2011,  8,  14), 163000),
+        new("Sonya Frost",       "Software Engineer",          "Engineering",   "Edinburgh",   23, new DateOnly(2008, 12, 13), 103600),
+        new("Suki Burks",        "Developer",                  "Engineering",   "London",      53, new DateOnly(2009,  10,  22), 114500),
+        new("Tatyana Fitzpatrick","Regional Director",         "Operations",    "London",      19, new DateOnly(2010,  3, 17), 385750),
+        new("Tiger Nixon",       "System Architect",           "Engineering",   "Edinburgh",   61, new DateOnly(2011,  4,  25), 320800),
+        new("Timothy Mooney",    "Office Manager",             "Operations",    "London",      37, new DateOnly(2008,  12,  11), 136200),
+        new("Unity Butler",      "Marketing Designer",         "Marketing",     "San Francisco", 47, new DateOnly(2009, 12, 9), 85675),
+        new("Vivian Harrell",    "Financial Controller",       "Finance",       "San Francisco", 62, new DateOnly(2009, 2, 14), 452500),
+        new("Warden Noble",      "Sales Executive",            "Sales",         "San Francisco", 56, new DateOnly(2012,  7, 24), 121900),
+        new("Yuri Berry",        "Chief Marketing Officer",    "Marketing",     "New York",    40, new DateOnly(2009,  6, 25), 675000),
+        new("Zenaida Frank",     "Software Engineer",          "Engineering",   "New York",    63, new DateOnly(2010,  1, 4), 125250),
+    };
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("initDataTable", "employeeTable", new
+            {
+                pageLength = 10,
+                lengthMenu = new[] { 5, 10, 25, 50 },
+                order = new[] { new[] { "0", "asc" } },
+                language = new
+                {
+                    search = "Filter records:",
+                    lengthMenu = "Show _MENU_ entries",
+                    info = "Showing _START_ to _END_ of _TOTAL_ employees",
+                    paginate = new { first = "First", last = "Last", next = "Next", previous = "Previous" }
+                }
+            });
+        }
+    }
+}
